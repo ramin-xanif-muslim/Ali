@@ -1,0 +1,42 @@
+.demands_wraper {
+	background: white;
+}
+.date_searce_text {
+	color: blue;
+	font-family: Open Sans;
+	line-height: 18px;
+	display: flex;
+	justify-content: center;
+}
+.date {
+	background: #e5e5e5;
+	padding-left: 1em;
+}
+.demand {
+	display: flex;
+	justify-content: space-between;
+	padding: 1em;
+}
+
+.date_searce_text ul {
+	list-style: disc;
+	display: inline-flex;
+	margin: 1rem 0 0 0;
+}
+.date_searce_text ul :first-child {
+	list-style: none;
+	margin: 0;
+}
+
+.date_searce_text ul li {
+	color: #000;
+	margin: 0 0 0 3rem;
+	font-size: 0.9em;
+}
+
+.date_searce_text ul li p {
+	font-family: Open Sans;
+	font-style: italic;
+	color: var(--clr-primary);
+	margin: 0;
+}
