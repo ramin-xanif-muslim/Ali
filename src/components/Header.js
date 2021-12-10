@@ -16,9 +16,12 @@ import "../styles/Header.css";
 import { useGlobalContext } from "../config/context";
 
 function Header({ openSidebar }) {
-	const { checkedFooterNavItem } = useGlobalContext();
+
+	const { checkedFooterNavItem, openSearchInput, isSearch } = useGlobalContext();
+
 	const [icon, setIcon] = useState("");
 	const [text, setText] = useState("");
+    
 	const fucShowIcons = () => {
 		if (checkedFooterNavItem === "") {
 			setIcon(home);
@@ -59,7 +62,8 @@ function Header({ openSidebar }) {
 	};
 	useEffect(() => {
 		fucShowIcons();
-	}, [checkedFooterNavItem]);
+	}, [ checkedFooterNavItem ]);
+    
 	return (
 		<div className="header">
 			<div>
@@ -91,11 +95,13 @@ function Header({ openSidebar }) {
 					<p className="text">/ {text}</p>
 				</div>
 				<div>
-					<img
-						src={search}
-						alt="search"
-						style={{ marginRight: "1em" }}
-					/>
+                    <button onClick = {() => openSearchInput(!isSearch)}>
+                        <img
+                            src={search}
+                            alt="search"
+                            style={{ marginRight: "1em" }}
+                        />
+                    </button>
 					<img src={slider} alt="slider" />
 				</div>
 			</div>

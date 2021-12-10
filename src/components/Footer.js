@@ -10,18 +10,25 @@ import arrowDown from "../img/ArrowDown.png";
 function Footer() {
 	const { getCheckedFooterNavItem } = useGlobalContext();
 	const [isChecked, setIsChecked] = useState(false);
-    const [ isArrow, setIsArrow ] = useState(false)
+	const [isArrow, setIsArrow] = useState(false);
 
 	const upFooterNav = () => {
 		setIsArrow(!isArrow);
 	};
 
 	return (
-		<footer className="footer" style={isArrow ? {bottom: 0} : {bottom: '-60px'}}>
-        <div onClick={upFooterNav} className='line'>
-            <img src={ isArrow ? arrowDown : arrowUp } />
-        </div>
-			<Row >
+		<footer
+			className="footer"
+			style={
+				isArrow
+					? { transition: "all 0.3s ease-in-out", bottom: 0 }
+					: { transition: "all 0.3s ease-in-out", bottom: "-60px" }
+			}
+		>
+			<div onClick={upFooterNav} className="line">
+				<img src={isArrow ? arrowDown : arrowUp} />
+			</div>
+			<Row className="menu-bottom">
 				{footerButtons.map((data, index) => {
 					let { id, text, url, icon, icon_h } = data;
 					const onClick = () => {
@@ -41,9 +48,15 @@ function Footer() {
 											}
 										/>
 									</div>
-									<div className={isChecked === index ? 'footer-text_h' : 'footer-text'}>
-                                        {text}
-                                    </div>
+									<div
+										className={
+											isChecked === index
+												? "footer-text_h"
+												: "footer-text"
+										}
+									>
+										{text}
+									</div>
 								</Link>
 							</div>
 						</Col>

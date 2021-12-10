@@ -5,20 +5,18 @@ import ProfilSidebarHeader from "../img/ProfilSidebarHeader.png";
 import chat from "../img/Chat.png";
 import "../styles/SideBar.css";
 
-const Sidebar = ({ isSidebarOpen }) => {
+const Sidebar = () => {
 	const [isChecked, setIsChecked] = useState(false);
 
 	return (
-		<aside
-			className={`${isSidebarOpen ? "sidebar show-sidebar" : "sidebar"}`}
-		>
+		<aside className="sidebar" >
 			<div className="sidebar-header">
 				<div className="sidebar-header-top">
 					<img src={ProfilSidebarHeader} />
 					<p>BALANS</p>
 					<img src={chat} />
 				</div>
-				<div>
+				<div className="sidebar-header-top">
 					<p>Euroclima</p>
 					<p>euroclima@admin</p>
 				</div>

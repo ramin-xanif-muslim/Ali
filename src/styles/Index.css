@@ -6,9 +6,9 @@ Variables
 @import url("https://fonts.googleapis.com/css2?family=Blinker:wght@400;600;700&family=Open+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Roboto:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap");
 
 :root {
-	--clr-primary: #2680c0;
-	--clr-primary-dark: hsl(205, 100%, 21%);
-	--clr-primary-light: hsl(205, 84%, 74%);
+	--blue: #02a4f2;
+	--dark-blue: #1164b1;
+	--dark: #041a3a;
 }
 /*
   =============== 
@@ -16,9 +16,11 @@ Variables
   ===============
   */
 
-/* * {
+* {
 	font-family: "Blinker", sans-serif !important;
-} */
+	box-shadow: none !important;
+	text-shadow: none !important;
+}
 
 *,
 ::after,
@@ -29,6 +31,7 @@ Variables
 }
 .App {
 	display: block;
-	background-color: #1164b1;
+	background-color: #c3c3c3;
 	height: 100vh;
+	position: relative;
 }

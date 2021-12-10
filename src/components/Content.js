@@ -15,10 +15,13 @@ import {
 } from "../config/data";
 import "../styles/Content.css";
 
-function Content( props ) {
-
-	const { checkedFooterNavItem } = useGlobalContext();
+function Content(props) {
+	const { checkedFooterNavItem, showFooter } = useGlobalContext();
 	const [showIcons, setShowIcons] = useState([]);
+
+    useEffect(() => {
+        showFooter()
+    },[])
 
 	const fucShowIcons = () => {
 		if (checkedFooterNavItem === 1) {
@@ -65,8 +68,8 @@ function Content( props ) {
 				{showIcons.map((item) => {
 					const { id, url, text, icon } = item;
 					return (
-						<Col xl={2} md={4} xs={8} key={id}>
-							<Link to={url}>
+						<Col span={8} key={id} >
+							<Link to={url} >
 								<div className="content_blok">
 									<div className="img_block">
 										<img src={icon} />

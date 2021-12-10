@@ -52,14 +52,6 @@ function withSearch(Component, url, objSR, dr=0) {
                     <input className='form-control form-control-lg' style={style} value={searchTerm} onChange={handleChange}  type='text' />
                     <button style={{btnStyle}} onClick={search} className="search-button"><FaSearch style={{fontSize:'20px'}} /></button>
                 </div>
-                
-
-                    {/* <MyInput
-                        type="text"
-                        placeholder="Search..."
-                        value={searchTerm}
-                        onChange={handleChange}
-                    /> */}
 
 
                 <Component {...props} items={items} />

@@ -6,10 +6,16 @@ import "antd/dist/antd.css";
 import RouteComponent from "./components/RouteComponent";
 import MyModal from "./components/UI/modal/MyModal";
 import "./styles/Content.css";
+import { useGlobalContext } from "./config/context";
+import LoginPage from "./pages/LoginPage";
 
 function App() {
+	const { isLogin, isFooter } = useGlobalContext();
 	const [modal, setModal] = useState(false);
-	// const [isArrow, setIsArrow] = useState(false);
+
+	if (isLogin === false) {
+		return <LoginPage />;
+	}
 	return (
 		<div className="App">
 
@@ -19,12 +25,11 @@ function App() {
 				<RouteComponent />
 			</div>
 
-			<Footer />
+            { isFooter && <Footer />}
 
 			<MyModal visible={modal} setVisible={setModal}>
-				<SideBar isSidebarOpen={modal} />
+				<SideBar />
 			</MyModal>
-
 		</div>
 	);
 }
