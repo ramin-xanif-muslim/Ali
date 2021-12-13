@@ -5,16 +5,15 @@ import SearchInput from "../components/UI/searcinput/SearchInput";
 import { useGlobalContext } from "../config/context";
 import { api } from "../api/api";
 import MyLoading from "../components/UI/loading/MyLoading";
-import { useNavigate } from "react-router";
 import withLoading from "../HOC/withLoading";
 import { Link } from "react-router-dom";
 
+import { useNavigate } from 'react-router';
+
 function Demands(props) {
-
-    // const [ barcode, setBarcode ] = useState([])
-
 	const { isSearch, hideFooter } = useGlobalContext();
-	const navigate = useNavigate();
+
+	let navigate = useNavigate();
 
 	const [demands, setDemands] = useState();
 	const [isLoading, setLoading] = useState(false);
@@ -28,7 +27,7 @@ function Demands(props) {
 	});
 
 	useEffect(() => {
-		fetchDemands();
+        setDemands(props.data)
 		hideFooter();
 	}, []);
 
@@ -49,53 +48,56 @@ function Demands(props) {
 		let res = await api.fetchDemands(searchObj);
 		setDemands(res);
 	};
+    function handleClickOnPlusBtn() {
+        navigate("/document");
+    }
 	if (isLoading) {
 		return <MyLoading />;
 	}
-    // const barcodeCam = (e) => {
-    //     console.log(e.date)
-    //     setBarcode([...barcode, e.date])
-    // }
 
 	return (
 		<div>
 			<SearchByDate obj={obj} getSearcObjByDate={getSearcObjByDate} />
 
-            
-			{/* <input
-            // onChange={e => setBarcode([...barcode, e.date])}
-            onChange={e => barcodeCam(e)}
-				accept="image/*"
-				id="icon-button-file"
-				type="file"
-				capture="environment"
-			/>
-            <p>{barcode ? barcode : 'not found'}</p> */}
-
 			{isSearch && <SearchInput fetchSearchTerm={fetchSearchTerm} />}
 
 			<DemandList demands={demands} />
 
-			<div className="document-footer">
-				<div className="text">
-					<p className="amount">Məbləğ</p>
-					<p className="profit">Qazanc</p>
-				</div>
-				<div className="create-button">
-					<button>
-						<p>+</p>
-					</button>
-				</div>
-				<div className="number">
-					<p className="amount">458</p>
-					<p className="profit">152</p>
-				</div>
-			</div>
+            <DemandsFooter 
+                handleClickOnPlusBtn={handleClickOnPlusBtn}
+                data={props.data}
+            />
 		</div>
 	);
 }
 
 export default withLoading(Demands, "demands");
+
+
+
+const DemandsFooter = (props) => {
+    return (
+        <div className="document-footer">
+            <div className="text">
+                <p className="amount">Məbləğ</p>
+                <p className="profit">Qazanc</p>
+            </div>
+            <div className="create-button">
+                <button onClick={props.handleClickOnPlusBtn}>
+                    <p>+</p>
+                </button>
+            </div>
+            <div className="number">
+                <p className="amount">
+                    {props.data ? props.data.AllProfit.toFixed(2) : 0}
+                </p>
+                <p className="profit">
+                    {props.data ? props.data.AllSum.toFixed(2) : 0}
+                </p>
+            </div>
+        </div>
+        )
+}
 
 const DemandList = ({ demands }) => {
 	const today = new Date().toLocaleDateString(undefined, {
@@ -117,38 +119,16 @@ const DemandList = ({ demands }) => {
 						);
 				  })
 				: ""}
-			{demands
-				? demands.List.map((item, index) => {
-						return (
-							<Demand
-								key={item.Name}
-								item={item}
-								index={index + 1}
-							/>
-						);
-				  })
-				: ""}
-			{demands
-				? demands.List.map((item, index) => {
-						return (
-							<Demand
-								key={item.Name}
-								item={item}
-								index={index + 1}
-							/>
-						);
-				  })
-				: ""}
 		</div>
 	);
 };
 
 const Demand = ({ item, index }) => {
-    const { getDocumentsItem } = useGlobalContext()
+	const { getDocumentsItem } = useGlobalContext();
 	const { CustomerName, Name, Amount, Moment } = item;
-    const onClick = () => {
-        getDocumentsItem(item);
-    };
+	const onClick = () => {
+		getDocumentsItem(item);
+	};
 	return (
 		<Link key={Name} to="/document" style={{ color: "inherit" }}>
 			<div className="demand" onClick={onClick}>
