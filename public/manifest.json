@@ -1,19 +1,7 @@
 {
-    "name": "Bein System",
-    "short_name": "Bein System",
-    "theme_color": "#0d0d0e",
-    "background_color": "#0d0d0e",
-    "display": "standalone",
-    "scope": "/",
-    "start_url": "/",
-    "prefer_related_applications": false,
+  "short_name": "React App",
+  "name": "Create React App Sample",
   "icons": [
-    {
-      "src": "maskable.png",
-      "sizes": "196x196",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
     {
       "src": "favicon.ico",
       "sizes": "64x64 32x32 24x24 16x16",
@@ -29,5 +17,9 @@
       "type": "image/png",
       "sizes": "512x512"
     }
-  ]
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
 }

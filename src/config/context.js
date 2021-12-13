@@ -1,61 +1,83 @@
-import { createContext, useContext, useReducer, useState } from "react";
+import { createContext, useContext, useState, useReducer } from "react";
+import axios from "axios";
 import reducer from "./reducer";
-
-const AppContect = createContext();
+const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
+  const initialState = {
+    groups: {},
+    prices: {},
+    attributes: {},
+    loadingPrices: true,
+    loadingAttributes: true,
+  };
 
-	const initialState = {
-		checkedFooterNavItem: "",
-		isSidebarOpen: false,
-        isSearch: false,
-        isLogin: true,
-        isFooter: true,
-        documentsItem: '',
-	};
+  const [state, dispatch] = useReducer(reducer, initialState);
 
-	const [state, dispatch] = useReducer(reducer, initialState);
+  const fetchProductGroup = async () => {
+    var filter = {
+      token: "17196e9b2a5024b4be4d646ef2b59b4e1",
+    };
+    const { data } = await axios.post(
+      `https://dev.bein.az/controllers/productfolders/get.php`,
+      filter
+    );
 
-	const getCheckedFooterNavItem = (id) => {
-		dispatch({ type: "CHECKED_FOOTER_NAV_ITEM", payload: id });
-	};
-    const openSearchInput = (bl) => {
-        dispatch({ type: 'OPEN_SEARCH_INPUT', payload: bl})
+    if (data.Headers.ResponseStatus === "0") {
+      dispatch({ type: "GROUPS", payload: data.Body.List });
+      return data;
+    } else {
+      return data.Body;
     }
-    const login = () => {
-        dispatch({ type: 'LOGIN', payload: true})
-    }
-    const logout = () => {
-        dispatch({ type: 'LOGOUT', payload: false})
-    }
-    const showFooter = () => {
-        dispatch({ type: 'SHOW_FOOTER', payload: true})
-    }
-    const hideFooter = () => {
-        dispatch({ type: 'HIDE_FOOTER', payload: false})
-    }
-    const getDocumentsItem = (item) => {
-        dispatch({ type: 'DOCUMENTS_ITEM', payload: item})
-    }
+  };
 
-	return (
-		<AppContect.Provider
-			value={{
-				...state,
-				getCheckedFooterNavItem,
-                openSearchInput,
-                login,
-                logout,
-                showFooter,
-                hideFooter,
-                getDocumentsItem,
-			}}
-		>
-			{children}
-		</AppContect.Provider>
-	);
+  const fetchPricesTypes = async () => {
+    var filter = {
+      token: "17196e9b2a5024b4be4d646ef2b59b4e1",
+    };
+    const { data } = await axios.post(
+      `https://dev.bein.az/controllers/pricetypes/get.php`,
+      filter
+    );
+
+    if (data.Headers.ResponseStatus === "0") {
+      dispatch({ type: "PRICES", payload: data.Body.List });
+      return data;
+    } else {
+      return data.Body;
+    }
+  };
+  const fetchAttributes = async () => {
+    var filter = {
+      token: "17196e9b2a5024b4be4d646ef2b59b4e1",
+      entitytype: "product",
+    };
+    const { data } = await axios.post(
+      `https://dev.bein.az/controllers/attributes/get.php`,
+      filter
+    );
+
+    if (data.Headers.ResponseStatus === "0") {
+      dispatch({ type: "ATTRIBUTES", payload: data.Body.List });
+      return data;
+    } else {
+      return data.Body;
+    }
+  };
+  return (
+    <AppContext.Provider
+      value={{
+        ...state,
+        fetchProductGroup,
+        fetchPricesTypes,
+        fetchAttributes,
+      }}
+    >
+      {children}
+    </AppContext.Provider>
+  );
 };
 
 export const useGlobalContext = () => {
-	return useContext(AppContect);
+  return useContext(AppContext);
 };
