@@ -1,44 +1,34 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
 import App from "./App";
+import "./styles/Index.css";
 import reportWebVitals from "./reportWebVitals";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { AppProvider } from "./config/context";
+import { BrowserRouter } from "react-router-dom";
+import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
+import { QueryClientProvider, QueryClient } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
-import "antd/dist/antd.css";
-import "semantic-ui-css/semantic.min.css";
-import "./App.css";
-import './Navbar.css'
-import "./Page.css";
-import "./Group.css";
-//contexts
-import { AuthProvider } from "./contexts/AuthContext";
-import { TableProvider } from "./contexts/TableContext";
-import { MyFormProvider } from "./contexts/FormContext";
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      refetchOnMount: true,
-      refetchOnWindowFocus: false,
-    },
-  },
-});
+const queryClient = new QueryClient();
+
 ReactDOM.render(
-  <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <TableProvider>
-          <MyFormProvider>
-            <App />
-          </MyFormProvider>
-        </TableProvider>
-      </AuthProvider>
-      <ReactQueryDevtools initialIsOpen={false} />
-    </QueryClientProvider>
-  </React.StrictMode>,
-  document.getElementById("root")
+	<React.StrictMode>
+		<BrowserRouter>
+			<QueryClientProvider client={queryClient}>
+				<AppProvider>
+					<App />
+				</AppProvider>
+				{/* <ReactQueryDevtools initialIsOpen={false} /> */}
+			</QueryClientProvider>
+		</BrowserRouter>
+	</React.StrictMode>,
+	document.getElementById("root")
 );
+
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: https://cra.link/PWA
+serviceWorkerRegistration.register();
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
